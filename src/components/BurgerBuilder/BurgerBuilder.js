@@ -42,19 +42,14 @@ class BurgerBuilder extends Component {
         })
     }
 
-    removeIngredientHandler = (id) => {
+    removeIngredientHandler = (ingredient) => {
 
         const newIngredients = [...this.state.ingredients]
 
-        const index = newIngredients.findIndex((ingredient) => {
-            return ingredient.id === id
+        const i = newIngredients.indexOf(ingredient)
 
-        })
-        //const index = newIngredients.indexOf(id)
-
-
-        if (newIngredients[index].count > 0)
-            newIngredients[index].count = newIngredients[index].count - 1
+        if (newIngredients[i].count > 0)
+            newIngredients[i].count = newIngredients[i].count - 1
 
         this.setState({
             ingredients: newIngredients
