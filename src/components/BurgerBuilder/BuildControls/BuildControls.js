@@ -14,6 +14,7 @@ const buildControls = (props) => {
         />
     })
 
+
     return (
         <div className={classes.BuildControls}>
             <p>Current Price: 4</p>
@@ -23,5 +24,16 @@ const buildControls = (props) => {
         </div>
     )
 }
+
+export const labelIdentificator = (ingredients, id) => {
+
+    return (
+        ingredients[id].label
+    )
+
+}
+
+
+
 
 export default buildControls
