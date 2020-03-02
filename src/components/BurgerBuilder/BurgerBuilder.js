@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Burger from './Burger/Burger'
 import BuildControls from './BuildControls/BuildControls'
-import { labelIdentificator } from './BuildControls/BuildControls'
+
 
 class BurgerBuilder extends Component {
 
@@ -31,47 +31,28 @@ class BurgerBuilder extends Component {
     }
 
 
-    addIngredientHandler = (label) => {
+    addIngredientHandler = (ingredient) => {
         const newIngredients = [...this.state.ingredients]
-        switch (label) {
-            case "salad":
-                newIngredients[0].count++
-                break;
-            case "meat":
-                newIngredients[1].count++
-                break;
-            case "cheese":
-                newIngredients[2].count++
-                break;
-            case "escalope":
-                newIngredients[3].count++
-                break;
 
-        }
+        const i = newIngredients.indexOf(ingredient)
+
+        newIngredients[i].count = newIngredients[i].count + 1
 
         this.setState({
             ingredients: newIngredients
         })
     }
 
-    removeIngredientHandler = (label) => {
+
+    removeIngredientHandler = (ingredient) => {
 
         const newIngredients = [...this.state.ingredients]
-        switch (label) {
-            case "salad":
-                newIngredients[0].count--
-                break;
-            case "meat":
-                newIngredients[1].count--
-                break;
-            case "cheese":
-                newIngredients[2].count--
-                break;
-            case "escalope":
-                newIngredients[3].count--
-                break;
 
-        }
+        const i = newIngredients.indexOf(ingredient)
+
+        if (newIngredients[i].count > 0)
+            newIngredients[i].count = newIngredients[i].count - 1
+
         this.setState({
             ingredients: newIngredients
         })
@@ -81,18 +62,15 @@ class BurgerBuilder extends Component {
     render() {
         let buildControls = null
         buildControls = (<div>
-            {
-                this.state.ingredients.map((ingredient) => {
 
-                    return (
-                        <BuildControls
-                            ingredients={this.state.ingredients}
-                            added={() => { this.addIngredientHandler(labelIdentificator(this.state.ingredients, ingredient.id)) }}
-                            removed={() => { this.removeIngredientHandler(labelIdentificator(this.state.ingredients, ingredient.id)) }}
-                            key={ingredient.id}
-                        />
-                    )
-                })}
+            <BuildControls
+                ingredients={this.state.ingredients}
+                addIngredientHandler={this.addIngredientHandler}
+                removeIngredientHandler={this.removeIngredientHandler}
+
+            />
+
+            )}
         </div>)
         return (
             <div>

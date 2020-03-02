@@ -8,8 +8,8 @@ const buildControls = (props) => {
     const ingredients = props.ingredients.map((ingredient) => {
         return <BuildControl
             label={ingredient.label}
-            added={props.added}
-            removed={props.removed}
+            added={() => { props.addIngredientHandler(ingredient) }}
+            removed={() => { props.removeIngredientHandler(ingredient) }}
             key={ingredient.id}
         />
     })
@@ -24,16 +24,6 @@ const buildControls = (props) => {
         </div>
     )
 }
-
-export const labelIdentificator = (ingredients, id) => {
-
-    return (
-        ingredients[id].label
-    )
-
-}
-
-
 
 
 export default buildControls
