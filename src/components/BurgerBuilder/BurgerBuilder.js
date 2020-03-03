@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Burger from './Burger/Burger'
 import BuildControls from './BuildControls/BuildControls'
-
+import axios from 'axios'
 
 class BurgerBuilder extends Component {
 
@@ -10,53 +10,57 @@ class BurgerBuilder extends Component {
             {
                 id: 0,
                 label: "salad",
-                count: 0
+                count: 0,
+                price: 0.5,
+                maxCount: 2
             },
             {
                 id: 1,
                 label: "meat",
-                count: 0
+                count: 0,
+                price: 3,
+                maxCount: 2
             },
             {
                 id: 2,
                 label: "cheese",
-                count: 0
+                count: 0,
+                price: 1.5,
+                maxCount: 2
             },
             {
                 id: 3,
                 label: "escalope",
-                count: 0
+                count: 0,
+                price: 2.2,
+                maxCount: 2
             }
-        ]
+        ],
+        totalPrice: 5
     }
 
 
-    addIngredientHandler = (ingredient) => {
+    addOrRemoveIngredientHandler = (id, action) => {
         const newIngredients = [...this.state.ingredients]
-
-        const i = newIngredients.indexOf(ingredient)
-
-        newIngredients[i].count = newIngredients[i].count + 1
-
+        let newTotalPrice = this.state.totalPrice
+        const i = newIngredients.findIndex(ingredient => {
+            return ingredient.id === id
+        })
+        if (action === "add") {
+            newIngredients[i].count++
+            newTotalPrice += newIngredients[i].price
+        }
+        else if (action === "remove") {
+            newIngredients[i].count--
+            newTotalPrice -= newIngredients[i].price
+        }
         this.setState({
-            ingredients: newIngredients
+            ingredients: newIngredients,
+            totalPrice: newTotalPrice
         })
     }
 
 
-    removeIngredientHandler = (ingredient) => {
-
-        const newIngredients = [...this.state.ingredients]
-
-        const i = newIngredients.indexOf(ingredient)
-
-        if (newIngredients[i].count > 0)
-            newIngredients[i].count = newIngredients[i].count - 1
-
-        this.setState({
-            ingredients: newIngredients
-        })
-    }
 
 
     render() {
@@ -65,9 +69,8 @@ class BurgerBuilder extends Component {
 
             <BuildControls
                 ingredients={this.state.ingredients}
-                addIngredientHandler={this.addIngredientHandler}
-                removeIngredientHandler={this.removeIngredientHandler}
-
+                addOrRemoveIngredient={this.addOrRemoveIngredientHandler}
+                totalPrice={this.state.totalPrice}
             />
 
             )}

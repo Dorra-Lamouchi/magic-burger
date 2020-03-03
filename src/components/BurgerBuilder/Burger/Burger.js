@@ -7,10 +7,13 @@ const burger = (props) => {
     for (let ingredient of props.ingredients)
         for (let i = 0; i < ingredient.count; i++)
             ingredients.push(<BurgerIngredient type={ingredient.label} />)
-
+    let message = null
+    if (ingredients.length === 0)
+        message = <p>Please start adding ingredients!!</p>
     return (
         <div className={classes.Burger}>
             <BurgerIngredient type='bread-top' />
+            {message}
             {ingredients}
             <BurgerIngredient type='bread-bottom' />
         </div>

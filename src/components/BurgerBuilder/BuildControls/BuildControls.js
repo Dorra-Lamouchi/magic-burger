@@ -8,8 +8,10 @@ const buildControls = (props) => {
     const ingredients = props.ingredients.map((ingredient) => {
         return <BuildControl
             label={ingredient.label}
-            added={() => { props.addIngredientHandler(ingredient) }}
-            removed={() => { props.removeIngredientHandler(ingredient) }}
+            added={() => { props.addOrRemoveIngredient(ingredient.id, "add") }}
+            removed={() => { props.addOrRemoveIngredient(ingredient.id, "remove") }}
+            disableRemoving={!ingredient.count}
+            disableAdding={ingredient.count >= ingredient.maxCount}
             key={ingredient.id}
         />
     })
@@ -17,7 +19,7 @@ const buildControls = (props) => {
 
     return (
         <div className={classes.BuildControls}>
-            <p>Current Price: 4</p>
+            <p>Current Price: {props.totalPrice.toFixed(2)} DT</p>
             {ingredients}
             <button className={classes.OrderButton}>ORDER NOW</button>
 
